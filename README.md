@@ -14,11 +14,13 @@ My hypothesis is that the fMRI simulations can lead to a more in-depth and accur
 ### The System
 Our system would be mid-modal utilizing both a brain encoder model (fMRI sims) and a visual stimuli model (video comprehension). Since both models are time-aware we can overlap the two and make powerful insights about when the issue was caused, where it was caused (in the brain), what it was that caused it, and how to revise it. If the results are as meaningful as i believe they will be then this will be an invaluable tool for all content creators in the world. The following is a high-level visual of the pipeline:
 
+*input*
 media -> brain encoder -> fMRI simulations 
-                                          \
-                                           )--> Predictive Report and Editable Actions
-                                          /
 media -> video encoder -> visual landmarks
+
+*output*
+Predictive Report and Editable Actions
+
 
 
 ### Challenges
