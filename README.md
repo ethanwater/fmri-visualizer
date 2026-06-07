@@ -36,5 +36,5 @@ This means that we would need to engineer our own fMRI brain encoder. This gives
 The goal is to provided a tool to independent creators that is comparable, if not better, than current neuroscience marketing agencies that exist today.
 
 **The Secret Goal**
-To compile a massive dataset that can map the independent traits of subcultures to fMRI encodings. AKA - we know which BOLD signals in which segments are good or bad depending on the target audience.
+To compile a massive dataset that can map the neuro-signatures of subcultures to fMRI encodings. Our aim is to discover whether consistent patterns within simulated neural responses correlate with positive or negative audience outcomes across different communities and content categories. 
 
