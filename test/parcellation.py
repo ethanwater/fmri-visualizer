@@ -19,8 +19,8 @@ LR_HEMISPHERE_VERTICES = 10242 # the amount of vertices in both the left and rig
 TEST_TIMESTAMPS = 90 # length of the fMRI recording. used for testing.
 SIGMA = 1.5
 
-LH_YEO7_2011_NETWORK = "atlases/fsaverage_parcel_outline/lh.Yeo2011_7Networks_N1000.annot"
-RH_YEO7_2011_NETWORK = "atlases/fsaverage_parcel_outline/rh.Yeo2011_7Networks_N1000.annot"
+LH_YEO7_2011_NETWORK = "resources/atlases/fsaverage_parcel_outline/lh.Yeo2011_7Networks_N1000.annot"
+RH_YEO7_2011_NETWORK = "resources/atlases/fsaverage_parcel_outline/rh.Yeo2011_7Networks_N1000.annot"
 
 cortical_networks = [
     "visual", "somatomotor", "dorsal_attention", 
@@ -55,6 +55,7 @@ def temporal_normalization(activations_29286, n_timestamps):
     return normalized_data
 
 def parcellate_activations(activations_29286, n_timestamps, anomalies=None):
+    start_time = time.perf_counter()
     #normalize the activation values
     activations_29286_normalized = temporal_normalization(activations_29286, n_timestamps)
 
@@ -101,7 +102,6 @@ def parcellate_activations(activations_29286, n_timestamps, anomalies=None):
     # final dictionary mapping to the requested tuple layout: (activations_list, standard deviation)
     cortical_parcellation = {}
 
-    print("Cortical Parcellation Map:")
     for net in cortical_networks:
         bilateral_mean = (lh_means[net] + rh_means[net]) / 2
         metric_value = float(np.std(bilateral_mean))
@@ -111,9 +111,10 @@ def parcellate_activations(activations_29286, n_timestamps, anomalies=None):
         
         # unpack for the print log
         means_list, std_val = cortical_parcellation[net]
-        print(f"  {net}: ACT>{means_list} STD>{std_val}")
 
     # TODO: we parcellate the subcortex based on Meta's mapping conditions
+    end_time = time.perf_counter()
+    print(f"Execution Time: {np.round((end_time-start_time) * 1000, decimals=5)}ms")
     plot_stacked_subplots(cortical_parcellation, None, sigma=SIGMA)
 
 
@@ -121,10 +122,6 @@ def parcellate_activations(activations_29286, n_timestamps, anomalies=None):
 
 def test_parcellate_activations():
     cortical = np.random.randn(TOTAL_ACTIVATIONS, TEST_TIMESTAMPS).astype(np.float32)
-
-    start_time = time.perf_counter()
     parcellate_activations(cortical, TEST_TIMESTAMPS, anomalies=[22.5])
-    end_time = time.perf_counter()
-    print(f"Execution Time: {np.round((end_time-start_time) * 1000, decimals=5)}ms")
 
 test_parcellate_activations()
